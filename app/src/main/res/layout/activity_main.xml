@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+<LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="0dp"
+        android:background="@drawable/shadow_134848" >
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@drawable/shadow_134848">
+
+                <TextView
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textview_posts"/>
+
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned"
+                        android:ems="10"
+                        android:id="@+id/editText_posts" android:text="@string/text_posts_editText"
+                        tools:ignore="LabelFor"/>
+                <Button
+                        android:text="@string/text_button_posts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_posts_submit"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@drawable/shadow_134848">
+
+                <TextView
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textview_comments"/>
+
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned"
+                        android:ems="10"
+                        android:id="@+id/editText_comments" android:text="@string/text_comments_editText"
+                        tools:ignore="LabelFor"/>
+                <Button
+                        android:text="@string/text_button_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_comments_submit"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@drawable/shadow_134848">
+
+                <TextView
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/textview_users"/>
+
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned"
+                        android:ems="10"
+                        android:id="@+id/editText_users" android:text="@string/text_users_editText"
+                        tools:ignore="LabelFor"/>
+                <Button
+                        android:text="@string/text_button_users"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_users_submit"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@drawable/shadow_134848">
+
+                <TextView
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView_photos"/>
+                <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned"
+                        android:ems="10"
+                        android:id="@+id/editText_photos" android:text="@string/text_photos_editText"
+                        tools:ignore="LabelFor"/>
+
+                <Button
+                        android:text="@string/text_button_photos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_photos_submit"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="0dp"
+                android:background="@drawable/shadow_134848">
+                <TextView
+                        android:padding="10dp"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textview_todos"/>
+
+                <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberSigned"
+                        android:ems="10"
+                        android:id="@+id/editText_todos" android:text="@string/text_todos_editText"
+                        tools:ignore="LabelFor"/>
+                <Button
+                        android:text="@string/text_button_todos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:id="@+id/button_todos_submit"/>
+        </LinearLayout>
+</LinearLayout>
+</ScrollView>
