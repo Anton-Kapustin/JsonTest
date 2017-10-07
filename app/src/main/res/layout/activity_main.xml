@@ -3,21 +3,20 @@
 <ScrollView
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
+        android:padding="0dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
 
 <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:background="@drawable/shadow_134848" >
+        android:padding="10dp">
 
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="0dp"
+                android:padding="10dp"
                 android:background="@drawable/shadow_134848">
 
                 <TextView
@@ -29,8 +28,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="numberSigned"
-                        android:ems="10"
-                        android:id="@+id/editText_posts" android:text="@string/text_posts_editText"
+                        android:ems="8"
+                        android:id="@+id/editText_posts" android:hint="@string/hint_posts_editText"
                         tools:ignore="LabelFor"/>
                 <Button
                         android:text="@string/text_button_posts"
@@ -42,7 +41,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="0dp"
+                android:padding="10dp"
                 android:background="@drawable/shadow_134848">
 
                 <TextView
@@ -54,8 +53,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="numberSigned"
-                        android:ems="10"
-                        android:id="@+id/editText_comments" android:text="@string/text_comments_editText"
+                        android:ems="8"
+                        android:id="@+id/editText_comments" android:hint="@string/hint_comments_editText"
                         tools:ignore="LabelFor"/>
                 <Button
                         android:text="@string/text_button_comments"
@@ -69,7 +68,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="0dp"
+                android:padding="10dp"
                 android:background="@drawable/shadow_134848">
 
                 <TextView
@@ -81,8 +80,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="numberSigned"
-                        android:ems="10"
-                        android:id="@+id/editText_users" android:text="@string/text_users_editText"
+                        android:ems="8"
+                        android:id="@+id/editText_users" android:hint="@string/hint_users_editText"
                         tools:ignore="LabelFor"/>
                 <Button
                         android:text="@string/text_button_users"
@@ -94,21 +93,21 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="0dp"
+                android:padding="10dp"
                 android:background="@drawable/shadow_134848">
 
-                <TextView
+                <ImageView
                         android:padding="10dp"
                         android:layout_gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView_photos"/>
+                        android:id="@+id/imageView_photos"/>
                 <EditText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="numberSigned"
-                        android:ems="10"
-                        android:id="@+id/editText_photos" android:text="@string/text_photos_editText"
+                        android:ems="8"
+                        android:id="@+id/editText_photos" android:hint="@string/hint_photos_editText"
                         tools:ignore="LabelFor"/>
 
                 <Button
@@ -121,7 +120,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="0dp"
+                android:padding="10dp"
                 android:background="@drawable/shadow_134848">
                 <TextView
                         android:padding="10dp"
@@ -134,8 +133,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="numberSigned"
-                        android:ems="10"
-                        android:id="@+id/editText_todos" android:text="@string/text_todos_editText"
+                        android:ems="8"
+                        android:id="@+id/editText_todos" android:hint="@string/hint_todos_editText"
                         tools:ignore="LabelFor"/>
                 <Button
                         android:text="@string/text_button_todos"

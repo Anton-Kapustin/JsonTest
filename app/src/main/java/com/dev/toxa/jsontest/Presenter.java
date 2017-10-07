@@ -1,5 +1,7 @@
 package com.dev.toxa.jsontest;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import org.json.JSONException;
@@ -50,23 +52,25 @@ public class Presenter implements MVPmain.presenter {
     }
 
     void usersUrl(String num) {
-        for (int i = 0; i <= 5; i++) {
-            String usersUrl = url + "users/" + num;
-            sendRequest(usersUrl);
+        for (int i = 1; i <= 5; i++) {
+            String userUrl = url + "users/" + i;
+            firstRunRequest(userUrl);
         }
     }
 
     void photosUrl() {
+        Log.d(LOG_TAG, "run photosUrl");
         int photoId = Integer.parseInt(view.getPhotosId());
         if ((photoId <= 5000) && (photoId > 0)) {
-            String photosUrl = url + "photos/" + String.valueOf(photoId);
-            sendRequest(photosUrl);
+            final String photoUrl = url + "photos/" + String.valueOf(photoId);
+            sendRequest(photoUrl);
         }
     }
 
     void photosUrl(String num) {
-        String usersUrl = url + "photos/" + num;
-        sendRequest(usersUrl);
+        Log.d(LOG_TAG, "run photosUrl with arg");
+        final String photoUrl = url + "photos/" + num;
+        firstRunRequest(photoUrl);
     }
 
     void todosUrl() {
@@ -78,20 +82,20 @@ public class Presenter implements MVPmain.presenter {
     }
 
     void todosUrl(String num) {
-        String usersUrl = url + "todos/" + num;
-        sendRequest(usersUrl);
+        String todoUrl = url + "todos/" + num;
+        firstRunRequest(todoUrl);
     }
 
     void firstRunRequest(String url) {
         Log.d(LOG_TAG, "url: " + url);
-        FirstRequest firstRequest = new FirstRequest();
-        firstRequest.execute(url);
+        AsyncActivityStartRequest asyncActivityStartRequest = new AsyncActivityStartRequest();
+        asyncActivityStartRequest.execute(url);
     }
 
     void sendRequest(String url) {
         Log.d(LOG_TAG, "url: " + url);
-        HttpRequest httpRequest = new HttpRequest();
-        httpRequest.execute(url);
+        AsyncHttpRequest AsyncHttpRequest = new AsyncHttpRequest();
+        AsyncHttpRequest.execute(url);
     }
 
     int randomId(int limit) {
@@ -102,8 +106,8 @@ public class Presenter implements MVPmain.presenter {
 
     @Override
     public void activityLoaded() {
-        usersUrl(String.valueOf(5));
         photosUrl(String.valueOf(3));
+        usersUrl(String.valueOf(5));
         todosUrl(String.valueOf(randomId(201)));
     }
 
@@ -132,9 +136,57 @@ public class Presenter implements MVPmain.presenter {
         todosUrl();
     }
 
-    class HttpRequest extends AsyncTask<String, Void, JSONObject> {
+    JSONObject request(URL url) {
+        JSONObject jsonObject = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            urlConnection = (HttpURLConnection) url.openConnection();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            byte[] bytes = new byte[16384];
+            int count;
+            while ((count = urlConnection.getInputStream().read(bytes)) != -1) {
+                byteArrayOutputStream.write(bytes, 0, count);
+            }
+            jsonObject = new JSONObject(byteArrayOutputStream.toString());
+            Log.d(LOG_TAG, "json receive: " + jsonObject.toString());
+            byteArrayOutputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } finally {
+            urlConnection.disconnect();
+        }
+        return jsonObject;
+    }
+
+    Bitmap loadImage(String url) {
+        Bitmap bitmapImage = null;
+        URL imageUrl = null;
+        HttpURLConnection httpURLConnection = null;
+        try {
+        imageUrl = new URL(url.replaceAll("\\r|\\n", ""));
+        httpURLConnection = (HttpURLConnection) imageUrl.openConnection();
+        bitmapImage = BitmapFactory.decodeStream((InputStream) imageUrl.getContent());
+        Log.d(LOG_TAG, "Runneble: " + "OK");
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "image url error: " + e);
+            e.printStackTrace();
+        } catch (IOException e) {
+        e.printStackTrace();
+    }
+        return bitmapImage;
+    }
+//
+    class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
         String LOG_TAG = "httpRequest: ";
         String param = null;
+        Bitmap bitmapImage;
 
         @Override
         protected JSONObject doInBackground(String... strings) {
@@ -143,42 +195,15 @@ public class Presenter implements MVPmain.presenter {
             for (String address : strings) {
                 param = address;
                 URL url = null;
-
                 try {
                     url = new URL(address);
                 } catch (MalformedURLException e) {
                     Log.e(LOG_TAG, "url error: " + e);
                     e.printStackTrace();
                 }
-                HttpURLConnection urlConnection = null;
-                try {
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    byte[] bytes = new byte[16384];
-                    int count;
-                    while ((count = urlConnection.getInputStream().read(bytes)) != -1) {
-                        byteArrayOutputStream.write(bytes, 0, count);
-                    }
-                    jsonObject = new JSONObject(byteArrayOutputStream.toString());
-                    Log.d(LOG_TAG, "json receive: " + jsonObject.toString());
-//                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//                    while (in.readLine() != null) {
-//                        request += in.readLine();
-//                        Log.d(LOG_TAG, "input: " + request);
-//                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } finally {
-                    urlConnection.disconnect();
-                }
+                jsonObject = request(url);
             }
-            Log.d(LOG_TAG, "read: " + jsonObject.toString());
+
             return jsonObject;
         }
 
@@ -192,7 +217,12 @@ public class Presenter implements MVPmain.presenter {
             } else if (param.contains("users")) {
                 view.setUsers(result);
             } else if (param.contains("photos")) {
-                view.setPhotos(result);
+                AsyncLoadImage asyncLoadImage = new AsyncLoadImage();
+                try {
+                    asyncLoadImage.execute(result.getString("url"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             } else if (param.contains("todos")) {
                 view.setTodos(result);
             }
@@ -202,8 +232,8 @@ public class Presenter implements MVPmain.presenter {
 
     }
 
-    class FirstRequest extends AsyncTask<String, Void, JSONObject> {
-        String LOG_TAG = "FirstRequest: ";
+    class AsyncActivityStartRequest extends AsyncTask<String, Void, JSONObject> {
+        String LOG_TAG = "ActivityStartRequest: ";
         String param = null;
 
         @Override
@@ -220,33 +250,8 @@ public class Presenter implements MVPmain.presenter {
                     Log.e(LOG_TAG, "url error: " + e);
                     e.printStackTrace();
                 }
-                HttpURLConnection urlConnection = null;
-                try {
-                    urlConnection = (HttpURLConnection) url.openConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    byte[] bytes = new byte[16384];
-                    int count;
-                    while ((count = urlConnection.getInputStream().read(bytes)) != -1) {
-                        byteArrayOutputStream.write(bytes, 0, count);
-                    }
-                    jsonObject = new JSONObject(byteArrayOutputStream.toString());
-                    Log.d(LOG_TAG, "json receive: " + jsonObject.toString());
-//                    BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
-//                    while (in.readLine() != null) {
-//                        request += in.readLine();
-//                        Log.d(LOG_TAG, "input: " + request);
-//                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } finally {
-                    urlConnection.disconnect();
-                }
+                jsonObject = request(url);
+
             }
             Log.d(LOG_TAG, "read: " + jsonObject.toString());
             return jsonObject;
@@ -257,13 +262,42 @@ public class Presenter implements MVPmain.presenter {
             Log.d(LOG_TAG, "result: " + result);
             if (param.contains("users")) {
                 view.appendUsers(result);
-            } else if (param.contains("photos")) {
-                view.appendPhotos(result);
             } else if (param.contains("todos")) {
                 view.appendTodos(result);
+            } else if (param.contains("photos")) {
+                AsyncLoadImage asyncLoadImage = new AsyncLoadImage();
+                try {
+                    asyncLoadImage.execute(result.getString("url"));
+                } catch (JSONException e) {
+                    Log.e(LOG_TAG, "image url from json error: " + e);
+                    e.printStackTrace();
+                }
+
             }
+        }
+    }
 
+    class AsyncLoadImage extends AsyncTask<String, Void, Bitmap> {
+        String LOG_TAG = "AsyncLoadImage: ";
+        String param = null;
+        Bitmap bitmapImage;
 
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            String request = "";
+            final URL imageUrl = null;
+            JSONObject jsonObject = null;
+            for (final String address : strings) {
+                param = address;
+                Log.d(LOG_TAG, "img url: " + address);
+                bitmapImage = loadImage(address);
+            }
+            return bitmapImage;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmapImg) {
+                view.setPhotos(bitmapImg);
         }
 
     }

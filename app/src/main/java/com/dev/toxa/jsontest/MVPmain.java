@@ -1,5 +1,7 @@
 package com.dev.toxa.jsontest;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import org.json.JSONObject;
 
 public interface MVPmain {
@@ -15,11 +17,10 @@ public interface MVPmain {
         void setPost(JSONObject jsonObject);
         void setComments(JSONObject jsonObject);
         void setUsers(JSONObject jsonObject);
-        void setPhotos(JSONObject jsonObject);
         void setTodos(JSONObject jsonObject);
+        void setPhotos(Bitmap image);
 
         void appendUsers(JSONObject jsonObject);
-        void appendPhotos(JSONObject jsonObject);
         void appendTodos(JSONObject jsonObject);
 
     }

@@ -5,9 +5,9 @@
     <string name="text_button_users">Submit</string>
     <string name="text_button_photos">Submit</string>
     <string name="text_button_todos">Submit</string>
-    <string name="text_comments_editText">Enter comment id</string>
-    <string name="text_users_editText">Enter user id</string>
-    <string name="text_photos_editText">Enter photo id</string>
-    <string name="text_todos_editText">Enter todo id</string>
-    <string name="text_posts_editText">Enter post id</string>
+    <string name="hint_comments_editText">Enter comment id</string>
+    <string name="hint_users_editText">Enter user id</string>
+    <string name="hint_photos_editText">Enter photo id</string>
+    <string name="hint_todos_editText">Enter todo id</string>
+    <string name="hint_posts_editText">Enter post id</string>
 </resources>

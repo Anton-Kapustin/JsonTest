@@ -1,10 +1,13 @@
 package com.dev.toxa.jsontest;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import org.json.JSONObject;
 
@@ -15,8 +18,9 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
     TextView posts;
     TextView users;
     TextView comments;
-    TextView photos;
     TextView todos;
+
+    ImageView photos;
 
     EditText editText_posts;
     EditText editText_comments;
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
         posts = (TextView) findViewById(R.id.textview_posts);
         comments = (TextView) findViewById(R.id.textview_comments);
         users = (TextView) findViewById(R.id.textview_users);
-        photos = (TextView) findViewById(R.id.textView_photos);
+        photos = (ImageView) findViewById(R.id.imageView_photos);
         todos = (TextView) findViewById(R.id.textview_todos);
 
         editText_posts = (EditText) findViewById(R.id.editText_posts);
@@ -59,31 +63,31 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
         button_posts_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.postsUrl();
+                presenter.button_posts_clicked();
             }
         });
         button_users_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.usersUrl();
+                presenter.button_users_clicked();
             }
         });
         button_comments_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.commentsUrl();
+                presenter.button_comments_clicked();
             }
         });
         button_photos_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.photosUrl();
+                presenter.button_photos_clicked();
             }
         });
         button_todos_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.todosUrl();
+                presenter.button_todos_clicked();
             }
         });
 
@@ -124,8 +128,8 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
         users.setText((CharSequence) jsonObject.toString());
     }
     @Override
-    public void setPhotos(JSONObject jsonObject) {
-        photos.setText((CharSequence) jsonObject.toString());
+    public void setPhotos(Bitmap image) {
+        photos.setImageBitmap(image);
     }
     @Override
     public void setTodos(JSONObject jsonObject) {
@@ -136,10 +140,7 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
     public void appendUsers(JSONObject jsonObject) {
         users.append(jsonObject.toString());
     }
-    @Override
-    public void appendPhotos(JSONObject jsonObject) {
 
-    }
     @Override
     public void appendTodos(JSONObject jsonObject) {
 
