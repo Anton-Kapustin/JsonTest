@@ -116,34 +116,29 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
     }
 
     @Override
-    public void setPost(JSONObject jsonObject) {
-        posts.setText((CharSequence) jsonObject.toString());
+    public void setPost(String data) {
+        posts.setText((CharSequence) data.toString());
     }
     @Override
-    public void setComments(JSONObject jsonObject) {
-        comments.setText((CharSequence) jsonObject.toString());
+    public void setComments(String data) {
+        comments.setText((CharSequence) data.toString());
     }
     @Override
-    public void setUsers(JSONObject jsonObject) {
-        users.setText((CharSequence) jsonObject.toString());
+    public void setUsers(String data) {
+        users.setText((CharSequence) data.toString());
     }
+
     @Override
     public void setPhotos(Bitmap image) {
         photos.setImageBitmap(image);
     }
     @Override
-    public void setTodos(JSONObject jsonObject) {
-        todos.setText((CharSequence) jsonObject.toString());
+    public void setTodos(String data) {
+        todos.setText((CharSequence) data.toString());
     }
 
     @Override
-    public void appendUsers(JSONObject jsonObject) {
-        users.append(jsonObject.toString());
+    public void appendUsers(String data) {
+        users.append(data);
     }
-
-    @Override
-    public void appendTodos(JSONObject jsonObject) {
-        todos.append(jsonObject.toString());
-    }
-
 }

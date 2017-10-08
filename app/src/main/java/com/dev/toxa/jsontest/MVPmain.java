@@ -14,14 +14,13 @@ public interface MVPmain {
         String getPhotosId();
         String getTodosId();
 
-        void setPost(JSONObject jsonObject);
-        void setComments(JSONObject jsonObject);
-        void setUsers(JSONObject jsonObject);
-        void setTodos(JSONObject jsonObject);
+        void setPost(String data);
+        void setComments(String data);
+        void setUsers(String data);
+        void setTodos(String data);
         void setPhotos(Bitmap image);
 
-        void appendUsers(JSONObject jsonObject);
-        void appendTodos(JSONObject jsonObject);
+        void appendUsers(String data);
 
     }
 

@@ -56,7 +56,6 @@ public class Presenter implements MVPmain.presenter {
     }
 
     void photosUrl() {
-        Log.d(LOG_TAG, "run photosUrl");
         int photoId = Integer.parseInt(view.getPhotosId());
         if ((photoId <= 5000) && (photoId > 0)) {
             final String photoUrl = url + "photos/" + String.valueOf(photoId);
@@ -65,7 +64,6 @@ public class Presenter implements MVPmain.presenter {
     }
 
     void photosUrl(String num) {
-        Log.d(LOG_TAG, "run photosUrl with arg");
         final String photoUrl = url + "photos/" + num;
         firstRunRequest(photoUrl);
     }
@@ -80,7 +78,7 @@ public class Presenter implements MVPmain.presenter {
 
     void todosUrl(String num) {
         String todoUrl = url + "todos/" + num;
-        firstRunRequest(todoUrl);
+        sendRequest(todoUrl);
     }
 
     void firstRunRequest(String url) {
@@ -171,7 +169,6 @@ public class Presenter implements MVPmain.presenter {
             httpURLConnection = (HttpURLConnection) imageUrl.openConnection();
             httpURLConnection.setReadTimeout(5000);
             bitmapImage = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
-            Log.d(LOG_TAG, "Runneble: " + "OK");
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "image url error: " + e);
             e.printStackTrace();
@@ -185,14 +182,17 @@ public class Presenter implements MVPmain.presenter {
             return bitmapImage;
         }
 
+    String parseJsonbject(JSONObject jsonObject) {
+        String parseJson = (jsonObject.toString()).replaceAll("\\{|\\}", "").replaceAll(",", ", \n");
+        return parseJson;
+    }
+
     class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
         String LOG_TAG = "httpRequest: ";
         String param = null;
-        Bitmap bitmapImage;
 
         @Override
         protected JSONObject doInBackground(String... strings) {
-            String request = "";
             JSONObject jsonObject = null;
             for (String address : strings) {
                 param = address;
@@ -205,19 +205,17 @@ public class Presenter implements MVPmain.presenter {
                 }
                 jsonObject = request(url);
             }
-
             return jsonObject;
         }
 
         @Override
         protected void onPostExecute(JSONObject result) {
-            Log.d(LOG_TAG, "result: " + result);
             if (param.contains("posts")) {
-                view.setPost(result);
+                view.setPost(parseJsonbject(result));
             } else if (param.contains("comments")) {
-                view.setComments(result);
+                view.setComments(parseJsonbject(result));
             } else if (param.contains("users")) {
-                view.setUsers(result);
+                view.setUsers(parseJsonbject(result));
             } else if (param.contains("photos")) {
                 AsyncLoadImage asyncLoadImage = new AsyncLoadImage();
                 try {
@@ -226,7 +224,7 @@ public class Presenter implements MVPmain.presenter {
                     e.printStackTrace();
                 }
             } else if (param.contains("todos")) {
-                view.setTodos(result);
+                view.setTodos(parseJsonbject(result));
             }
 
 
@@ -253,19 +251,16 @@ public class Presenter implements MVPmain.presenter {
                     e.printStackTrace();
                 }
                 jsonObject = request(url);
-
             }
-            Log.d(LOG_TAG, "read: " + jsonObject.toString());
             return jsonObject;
         }
 
         @Override
         protected void onPostExecute(JSONObject result) {
-            Log.d(LOG_TAG, "result: " + result);
             if (param.contains("users")) {
-                view.appendUsers(result);
-            } else if (param.contains("todos")) {
-                view.appendTodos(result);
+                String parseJson = parseJsonbject(result);
+                parseJson += "\n\n";
+                view.appendUsers(parseJson);
             } else if (param.contains("photos")) {
                 AsyncLoadImage asyncLoadImage = new AsyncLoadImage();
                 try {
@@ -274,7 +269,6 @@ public class Presenter implements MVPmain.presenter {
                     Log.e(LOG_TAG, "image url from json error: " + e);
                     e.printStackTrace();
                 }
-
             }
         }
     }
@@ -286,9 +280,6 @@ public class Presenter implements MVPmain.presenter {
 
         @Override
         protected Bitmap doInBackground(String... strings) {
-            String request = "";
-            final URL imageUrl = null;
-            JSONObject jsonObject = null;
             for (final String address : strings) {
                 param = address;
                 Log.d(LOG_TAG, "img url: " + address);
@@ -301,7 +292,6 @@ public class Presenter implements MVPmain.presenter {
         protected void onPostExecute(Bitmap bitmapImg) {
                 view.setPhotos(bitmapImg);
         }
-
     }
 }
 
