@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
 
     @Override
     public void appendTodos(JSONObject jsonObject) {
-
+        todos.append(jsonObject.toString());
     }
 
 }

@@ -13,9 +13,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
-/**
- * Created by toxa on 04.10.17.
- */
 public class Presenter implements MVPmain.presenter {
 
     String LOG_TAG = "Presenter: ";
@@ -170,19 +167,24 @@ public class Presenter implements MVPmain.presenter {
         URL imageUrl = null;
         HttpURLConnection httpURLConnection = null;
         try {
-        imageUrl = new URL(url.replaceAll("\\r|\\n", ""));
-        httpURLConnection = (HttpURLConnection) imageUrl.openConnection();
-        bitmapImage = BitmapFactory.decodeStream((InputStream) imageUrl.getContent());
-        Log.d(LOG_TAG, "Runneble: " + "OK");
+            imageUrl = new URL(url);
+            httpURLConnection = (HttpURLConnection) imageUrl.openConnection();
+            httpURLConnection.setReadTimeout(5000);
+            bitmapImage = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
+            Log.d(LOG_TAG, "Runneble: " + "OK");
         } catch (MalformedURLException e) {
             Log.e(LOG_TAG, "image url error: " + e);
             e.printStackTrace();
         } catch (IOException e) {
         e.printStackTrace();
-    }
-        return bitmapImage;
-    }
-//
+        } finally {
+            if (httpURLConnection != null) {
+                httpURLConnection.disconnect();
+            }
+        }
+            return bitmapImage;
+        }
+
     class AsyncHttpRequest extends AsyncTask<String, Void, JSONObject> {
         String LOG_TAG = "httpRequest: ";
         String param = null;
