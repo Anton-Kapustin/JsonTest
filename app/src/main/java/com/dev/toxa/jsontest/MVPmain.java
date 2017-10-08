@@ -22,6 +22,8 @@ public interface MVPmain {
 
         void appendUsers(String data);
 
+        void errorPhoto();
+
     }
 
     interface presenter {

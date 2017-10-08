@@ -29,6 +29,8 @@ public class Presenter implements MVPmain.presenter {
         if ((postId <= 100) && (postId >0)) {
             String postUrl = url + "posts/" + String.valueOf(postId);
             sendRequest(postUrl);
+        } else {
+            view.setPost("ID is not correct");
         }
     }
 
@@ -37,6 +39,8 @@ public class Presenter implements MVPmain.presenter {
         if ((commentId <= 500) && (commentId > 0)) {
             String commentsUrl = url + "comments/" + String.valueOf(commentId);
             sendRequest(commentsUrl);
+        } else {
+            view.setComments("ID is not correct");
         }
     }
 
@@ -45,6 +49,8 @@ public class Presenter implements MVPmain.presenter {
         if ((userId <= 10) && (userId > 0)) {
             String usersUrl = url + "users/" + String.valueOf(userId);
             sendRequest(usersUrl);
+        } else {
+            view.setUsers("ID is not correct");
         }
     }
 
@@ -60,6 +66,8 @@ public class Presenter implements MVPmain.presenter {
         if ((photoId <= 5000) && (photoId > 0)) {
             final String photoUrl = url + "photos/" + String.valueOf(photoId);
             sendRequest(photoUrl);
+        } else {
+            view.errorPhoto();
         }
     }
 

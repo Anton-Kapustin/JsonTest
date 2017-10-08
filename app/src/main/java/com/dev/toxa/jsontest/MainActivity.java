@@ -141,4 +141,9 @@ public class MainActivity extends AppCompatActivity implements MVPmain.view {
     public void appendUsers(String data) {
         users.append(data);
     }
+
+    @Override
+    public void errorPhoto() {
+        photos.setImageResource(R.drawable.ic_block_black_24dp);
+    }
 }
