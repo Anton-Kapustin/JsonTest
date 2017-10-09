@@ -10,4 +10,8 @@
     <string name="hint_photos_editText">Enter photo id</string>
     <string name="hint_todos_editText">Enter todo id</string>
     <string name="hint_posts_editText">Enter post id</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_contacts"/>
 </resources>
